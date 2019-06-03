@@ -9,7 +9,7 @@
 class RNG {
 
 public:
-    RNG(unsigned int seed);
+    explicit RNG(unsigned int seed);
     double random();
     double sampleUniform(double min, double max);
     double sampleExponential(double mean);
