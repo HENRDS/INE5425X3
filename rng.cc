@@ -3,22 +3,26 @@
 //
 
 #include "rng.hpp"
+#include <cmath>
 RNG::RNG(unsigned int seed): seed(seed) {
 }
 double RNG::random() {
-    constexpr auto maxBound = static_cast<unsigned int>(-1);
+    constexpr auto upperBound = static_cast<unsigned int>(-1);
     unsigned int number = this->seed;
     number ^= number << 13u;
     number ^= number >> 17u;
     number ^= number << 5u;
     this->seed = number;
-    return double(number) / double(maxBound);
+    return double(number) / double(upperBound);
 }
 double RNG::sampleUniform(double min, double max) {
-    return 0;
+    // TODO: check max > min and do something about it
+    double interval = max - min;
+    return interval * this->random() + min;
 }
 double RNG::sampleExponential(double mean) {
-    return 0;
+
+    return -mean * log(this->random());
 }
 double RNG::sampleErlang(double mean, int M) {
     return 0;
@@ -41,9 +45,9 @@ double RNG::sampleLogNormal(double mean, double stddev) {
 double RNG::sampleTriangular(double min, double mode, double max) {
     return 0;
 }
-double RNG::sampleDiscrete(double value, double acumProb, double rest, ...) {
+double RNG::sampleDiscrete(double value, double acumProb, double rest...) {
     return 0;
 }
-double RNG::sampleDiscrete(std::pair<double, double> items, ...) {
+double RNG::sampleDiscrete(std::pair<double, double> items ...) {
     return 0;
 }

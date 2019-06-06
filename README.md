@@ -3,8 +3,8 @@
 Implementation of a Random number generator and random probability distributions.
 
 - [X] Random number generation
-- [ ] Uniform distribution
-- [ ] Exponential distribution
+- [X] Uniform distribution
+- [X] Exponential distribution
 - [ ] Erlang distribution
 - [ ] Normal distribution
 - [ ] Gamma distribution
