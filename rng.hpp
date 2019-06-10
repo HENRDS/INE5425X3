@@ -26,6 +26,7 @@ public:
     double sampleDiscrete(std::pair<double, double> items...);
 private:
     unsigned int seed;
+    double probit(double p);
 };
 
 #endif //INE5425X3_RNG_HPP

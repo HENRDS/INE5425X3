@@ -5,11 +5,11 @@ Implementation of a Random number generator and random probability distributions
 - [X] Random number generation
 - [X] Uniform distribution
 - [X] Exponential distribution
-- [ ] Erlang distribution
-- [ ] Normal distribution
-- [ ] Gamma distribution
+- [X] Erlang distribution
+- [X] Normal distribution
+- [X] Gamma distribution
 - [ ] Beta distribution
-- [ ] Weibull distribution
-- [ ] LogNormal distribution
+- [X] Weibull distribution
+- [X] LogNormal distribution
 - [ ] Triangular distribution
 - [ ] Discrete probability distribution

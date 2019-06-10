@@ -9,12 +9,9 @@
 
 
 int main() {
-
-
     RNG rng(23);
-    std::cout << sizeof(unsigned int) << std::endl;
-    for (int i = 0; i < 1000; ++i) {
-        std::cout << rng.sampleExponential(23.23) << std::endl;
+    for (int i = 0; i < 100000; ++i) {
+        std::cout << rng.sampleGamma(23, 23) << std::endl;
     }
     return 0;
 }
