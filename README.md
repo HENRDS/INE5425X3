@@ -11,5 +11,5 @@ Implementation of a Random number generator and random probability distributions
 - [ ] Beta distribution
 - [X] Weibull distribution
 - [X] LogNormal distribution
-- [ ] Triangular distribution
+- [X] Triangular distribution
 - [ ] Discrete probability distribution

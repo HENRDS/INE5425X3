@@ -6,8 +6,7 @@
 #define INE5425X3_RNG_HPP
 
 #include <utility>
-
-
+#include <vector>
 class RNG {
 
 public:
@@ -22,11 +21,11 @@ public:
     double sampleWeibull(double alpha, double scale);
     double sampleLogNormal(double mean, double stddev);
     double sampleTriangular(double min, double mode, double max);
-    double sampleDiscrete(double value, double acumProb, double rest...);
-    double sampleDiscrete(std::pair<double, double> items...);
+    double sampleDiscrete(double value, double accProb, ...);
 private:
+
     unsigned int seed;
-    double probit(double p);
+    static double probit(double p);
 };
 
 #endif //INE5425X3_RNG_HPP
