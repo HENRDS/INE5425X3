@@ -6,7 +6,7 @@
 #define INE5425X3_RNG_HPP
 
 #include <utility>
-#include <vector>
+
 class RNG {
 
 public:

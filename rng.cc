@@ -4,21 +4,19 @@
 
 #include "rng.hpp"
 #include <cmath>
-#include <exception>
-#include <stdexcept>
+#include <cstdarg>
+
 RNG::RNG(unsigned int seed) : seed(seed) {
 }
 double RNG::random() {
+    // Linear congruential generator
     constexpr auto upperBound = static_cast<unsigned int>(-1);
-    unsigned int number = this->seed;
-    number ^= number << 13u;
-    number ^= number >> 17u;
-    number ^= number << 5u;
-    this->seed = number;
-    return double(number) / double(upperBound);
+    // "Minimum standard", recommended by Park, Miller, and Stockmeyer in 1993
+    constexpr unsigned int multiplier = 48271, increment = 0;
+    this->seed = (multiplier * this->seed + increment) % upperBound;
+    return double(this->seed) / double(upperBound);
 }
 double RNG::sampleUniform(double min, double max) {
-    // TODO: check max > min and do something about it
     double interval = max - min;
     return interval * this->random() + min;
 }
@@ -65,7 +63,6 @@ double RNG::sampleLogNormal(double mean, double stddev) {
     return exp(this->sampleNormal(mean, stddev));
 }
 double RNG::sampleTriangular(double min, double mode, double max) {
-    // TODO: Check min < max and min <= mode <=max
     double u = this->random(), f = (mode - min) / (max - min);
     if (u < f) return min + sqrt(u * (max - min) * (mode - min));
     return max - sqrt((1.0 - u) * (max - min) * (max - mode));
@@ -110,5 +107,13 @@ double RNG::probit(double p) {
 
 }
 double RNG::sampleDiscrete(double value, double accProb, ...) {
-    return 0.0;
+    double val = value, acc = accProb, u = this->random();
+    va_list args;
+    va_start(args, accProb);
+    while(acc < 1.0 && u < acc ) {
+        val = va_arg(args, double);
+        acc += va_arg(args, double);
+    }
+    va_end(args);
+    return val;
 }

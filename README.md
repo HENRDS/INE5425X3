@@ -12,4 +12,4 @@ Implementation of a Random number generator and random probability distributions
 - [X] Weibull distribution
 - [X] LogNormal distribution
 - [X] Triangular distribution
-- [ ] Discrete probability distribution
+- [X] Discrete probability distribution
