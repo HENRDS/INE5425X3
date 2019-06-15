@@ -9,7 +9,11 @@ using namespace std;
 
 RNGTest::RNGTest(unsigned int seed): generator(seed) {
 
+
 }
+
+
+
 void RNGTest::testUniform() {
 
 }

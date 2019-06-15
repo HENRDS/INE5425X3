@@ -9,30 +9,30 @@
 RNG::RNG(unsigned int seed) : seed(seed) {
 }
 double RNG::random() {
-    // Linear congruential generator
+    // XorShift
     constexpr auto upperBound = static_cast<unsigned int>(-1);
-    // "Minimum standard", recommended by Park, Miller, and Stockmeyer in 1993
-    constexpr unsigned int multiplier = 48271, increment = 0;
-    this->seed = (multiplier * this->seed + increment) % upperBound;
-    return double(this->seed) / double(upperBound);
+    unsigned int number = this->seed;
+    number ^= number << 13u;
+    number ^= number >> 17u;
+    number ^= number << 5u;
+    this->seed = number;
+    return double(number) / double(upperBound);
 }
 double RNG::sampleUniform(double min, double max) {
     double interval = max - min;
     return interval * this->random() + min;
 }
 double RNG::sampleExponential(double mean) {
-
     return -mean * log(this->random());
 }
 double RNG::sampleErlang(double mean, int M) {
-
     double acc = 0.0;
     for (int i = 0; i < M; ++i)
         acc += log(this->random());
     return -mean * acc;
 }
 double RNG::sampleNormal(double mean, double stddev) {
-    return mean + stddev * RNG::probit(this->random());
+    return mean + stddev * this->probit();
 }
 double RNG::sampleGamma(double mean, double alpha) {
     // Marsaglia's squeeze method
@@ -44,7 +44,7 @@ double RNG::sampleGamma(double mean, double alpha) {
     double x, v;
     for (;;) {
         do {
-            x = RNG::probit(this->random());
+            x = this->probit();
             v = pow(1 + c * x, 3);
         } while (v < 0.0);
         double u = this->random();
@@ -53,7 +53,9 @@ double RNG::sampleGamma(double mean, double alpha) {
     }
 }
 double RNG::sampleBeta(double alpha, double beta, double infLimit, double supLimit) {
-    return 0;
+    double x = this->sampleGamma(1, alpha), y = this->sampleGamma(1, beta);
+    double multiplier = supLimit - infLimit;
+    return multiplier * (x / (x + y)) + infLimit;
 }
 double RNG::sampleWeibull(double alpha, double scale) {
     // https://www.taygeta.com/random/weibull.html
@@ -67,9 +69,10 @@ double RNG::sampleTriangular(double min, double mode, double max) {
     if (u < f) return min + sqrt(u * (max - min) * (mode - min));
     return max - sqrt((1.0 - u) * (max - min) * (max - mode));
 }
-double RNG::probit(double p) {
+double RNG::probit() {
     // Acklam's Algorithm
     // https://stackedboxes.org/2017/05/01/acklams-normal-quantile-function/
+
     constexpr double A[6] = {
         -3.969683028665376e+01, 2.209460984245205e+02, -2.759285104469687e+02, 1.383577518672690e+02,
         -3.066479806614716e+01, 2.506628277459239e+00
@@ -88,6 +91,7 @@ double RNG::probit(double p) {
 
     constexpr double pLow = 0.0245;
     constexpr double pHigh = 1.0 - pLow;
+    double p = this-> random();
     if (p < pLow) {
         double q = sqrt(-2.0 * log(p));
         return (((((C[0] * q + C[1]) * q + C[2]) * q + C[3]) * q + C[4]) * q + C[5]) /

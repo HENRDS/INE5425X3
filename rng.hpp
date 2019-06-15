@@ -23,9 +23,8 @@ public:
     double sampleTriangular(double min, double mode, double max);
     double sampleDiscrete(double value, double accProb, ...);
 private:
-
     unsigned int seed;
-    static double probit(double p);
+    double probit();
 };
 
 #endif //INE5425X3_RNG_HPP

@@ -8,7 +8,7 @@ Implementation of a Random number generator and random probability distributions
 - [X] Erlang distribution
 - [X] Normal distribution
 - [X] Gamma distribution
-- [ ] Beta distribution
+- [X] Beta distribution
 - [X] Weibull distribution
 - [X] LogNormal distribution
 - [X] Triangular distribution
