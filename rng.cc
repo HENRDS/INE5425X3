@@ -10,13 +10,11 @@ RNG::RNG(unsigned int seed) : seed(seed) {
 }
 double RNG::random() {
     // XorShift
-    constexpr auto upperBound = static_cast<unsigned int>(-1);
-    unsigned int number = this->seed;
-    number ^= number << 13u;
-    number ^= number >> 17u;
-    number ^= number << 5u;
-    this->seed = number;
-    return double(number) / double(upperBound);
+    constexpr auto upperBound = static_cast<double>(static_cast<unsigned int>(-1)) + 1;
+    this->seed ^= this->seed << 13u;
+    this->seed ^= this->seed >> 17u;
+    this->seed ^= this->seed << 5u;
+    return double(this->seed) / upperBound;
 }
 double RNG::sampleUniform(double min, double max) {
     double interval = max - min;
@@ -26,10 +24,10 @@ double RNG::sampleExponential(double mean) {
     return -mean * log(this->random());
 }
 double RNG::sampleErlang(double mean, int M) {
-    double acc = 0.0;
+    double acc = 1.0;
     for (int i = 0; i < M; ++i)
-        acc += log(this->random());
-    return -mean * acc;
+        acc *= this->random();
+    return -mean * log(acc);
 }
 double RNG::sampleNormal(double mean, double stddev) {
     return mean + stddev * this->probit();
@@ -38,6 +36,7 @@ double RNG::sampleGamma(double mean, double alpha) {
     // Marsaglia's squeeze method
     // https://dl.acm.org/citation.cfm?doid=358407.358414
     if (alpha < 1.0) {
+        // "Boost" alpha
         return pow(sampleGamma(mean, 1.0 + alpha), 1.0 / alpha);
     }
     double d = alpha - 1.0 / 3.0, c = 1.0 / sqrt(9.0 * d);

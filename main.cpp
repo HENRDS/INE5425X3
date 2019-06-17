@@ -7,10 +7,9 @@ void test(unsigned int seed);
 
 
 int main(int argc, char* argv[]) {
-
     RNG rng(23);
-    for (int i = 0; i < 5000000; ++i) {
-        cout << rng.sampleBeta(0.5, 3.14, 0.0, 10.0) << endl;
+    for (int i = 0; i < 10000000; ++i) {
+        cout << rng.random() << "\n";
     }
     return 0;
 }
