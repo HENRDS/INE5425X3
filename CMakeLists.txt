@@ -3,4 +3,7 @@ project(INE5425X3)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(INE5425X3 main.cpp rng.cc rng.hpp tests.cc tests.hpp)
+
+
+
+add_executable(INE5425X3 main.cc rng.cc rng.hpp tests.cc tests.hpp)

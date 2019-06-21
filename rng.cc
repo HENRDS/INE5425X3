@@ -9,8 +9,7 @@
 RNG::RNG(unsigned int seed) : seed(seed) {
 }
 double RNG::random() {
-    // XorShift
-    constexpr auto upperBound = static_cast<double>(static_cast<unsigned int>(-1)) + 1;
+    constexpr auto upperBound = static_cast<double>(static_cast<unsigned int>(-1)) + 1.0;
     this->seed ^= this->seed << 13u;
     this->seed ^= this->seed >> 17u;
     this->seed ^= this->seed << 5u;
@@ -36,7 +35,7 @@ double RNG::sampleGamma(double mean, double alpha) {
     // Marsaglia's squeeze method
     // https://dl.acm.org/citation.cfm?doid=358407.358414
     if (alpha < 1.0) {
-        // "Boost" alpha
+        // "boost" alpha
         return pow(sampleGamma(mean, 1.0 + alpha), 1.0 / alpha);
     }
     double d = alpha - 1.0 / 3.0, c = 1.0 / sqrt(9.0 * d);
@@ -45,7 +44,7 @@ double RNG::sampleGamma(double mean, double alpha) {
         do {
             x = this->probit();
             v = pow(1 + c * x, 3);
-        } while (v < 0.0);
+        } while (v <= 0.0);
         double u = this->random();
         if (u < 1.0 - 0.331 * pow(x, 4)) return d * v * mean;
         if (log(u) < 0.5 * pow(x, 2) + d * (1 - v + log(v))) return d * v * mean;
@@ -90,7 +89,7 @@ double RNG::probit() {
 
     constexpr double pLow = 0.0245;
     constexpr double pHigh = 1.0 - pLow;
-    double p = this-> random();
+    double p = this->random();
     if (p < pLow) {
         double q = sqrt(-2.0 * log(p));
         return (((((C[0] * q + C[1]) * q + C[2]) * q + C[3]) * q + C[4]) * q + C[5]) /
@@ -113,10 +112,14 @@ double RNG::sampleDiscrete(double value, double accProb, ...) {
     double val = value, acc = accProb, u = this->random();
     va_list args;
     va_start(args, accProb);
-    while(acc < 1.0 && u < acc ) {
+    while (acc < 1.0 && u < acc) {
         val = va_arg(args, double);
         acc += va_arg(args, double);
     }
     va_end(args);
     return val;
 }
+void RNG::setSeed(unsigned int newSeed) {
+    this->seed = newSeed;
+}
+
