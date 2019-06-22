@@ -38,7 +38,7 @@ double RNG::sampleGamma(double mean, double alpha) {
         // "boost" alpha
         return pow(sampleGamma(mean, 1.0 + alpha), 1.0 / alpha);
     }
-    double d = alpha - 1.0 / 3.0, c = 1.0 / sqrt(9.0 * d);
+    double d = (alpha - 1.0) / 3.0, c = 1.0 / sqrt(9.0 * d);
     double x, v;
     for (;;) {
         do {
@@ -46,8 +46,8 @@ double RNG::sampleGamma(double mean, double alpha) {
             v = pow(1 + c * x, 3);
         } while (v <= 0.0);
         double u = this->random();
-        if (u < 1.0 - 0.331 * pow(x, 4)) return d * v * mean;
-        if (log(u) < 0.5 * pow(x, 2) + d * (1 - v + log(v))) return d * v * mean;
+        if (u < 1.0 - 0.331 * pow(x, 4)) return d * v;
+        if (log(u) < 0.5 * pow(x, 2) + d * (1 - v + log(v))) return d * v;
     }
 }
 double RNG::sampleBeta(double alpha, double beta, double infLimit, double supLimit) {

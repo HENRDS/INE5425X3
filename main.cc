@@ -10,18 +10,13 @@
 using namespace std;
 void test(unsigned int seed);
 
-class XorShift {
-
-};
-
 int main(int argc, char* argv[]) {
     unsigned int seed = 4202369;
     int n = 1000000;
     RNG rng(seed);
-    cout << std::setprecision(32);
+    cout << std::setprecision(52);
     for (int i = 0; i < n; ++i) {
-        cout << rng.random() << "\n";
-
+        cout << rng.sampleGamma(1, 16) << "\n";
     }
     return 0;
 }
