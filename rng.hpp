@@ -11,8 +11,16 @@ class RNG {
 
 public:
     explicit RNG(unsigned int seed);
+    /// @brief Sets the seed for the random generator
+    /// @param newSeed The new value of the seed
     void setSeed(unsigned int newSeed);
+    /// @brief Generates a random uniforme variate
+    /// @returns Variate following the uniform distributuion (0, 1] 
     double random();
+    /// @brief Generates a random uniforme variate
+    /// @param min The minimum value of the variate
+    /// @param max The maximum value of the variate 
+    /// @returns variate following the uniform distributuion (min, max)
     double sampleUniform(double min, double max);
     double sampleExponential(double mean);
     double sampleErlang(double mean, int M);
