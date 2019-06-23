@@ -32,23 +32,7 @@ double RNG::sampleNormal(double mean, double stddev) {
     return mean + stddev * this->probit();
 }
 double RNG::sampleGamma(double mean, double alpha) {
-    // Marsaglia's squeeze method
-    // https://dl.acm.org/citation.cfm?doid=358407.358414
-    if (alpha < 1.0) {
-        // "boost" alpha
-        return pow(sampleGamma(mean, 1.0 + alpha), 1.0 / alpha);
-    }
-    double d = (alpha - 1.0) / 3.0, c = 1.0 / sqrt(9.0 * d);
-    double x, v;
-    for (;;) {
-        do {
-            x = this->probit();
-            v = pow(1 + c * x, 3);
-        } while (v <= 0.0);
-        double u = this->random();
-        if (u < 1.0 - 0.331 * pow(x, 4)) return d * v;
-        if (log(u) < 0.5 * pow(x, 2) + d * (1 - v + log(v))) return d * v;
-    }
+    return this->marsaglia(alpha, mean / alpha);
 }
 double RNG::sampleBeta(double alpha, double beta, double infLimit, double supLimit) {
     double x = this->sampleGamma(1, alpha), y = this->sampleGamma(1, beta);
@@ -104,7 +88,7 @@ double RNG::probit() {
 
     double q = p - 0.5f;
     double r = q * q;
-    return (((((A[0] * r + A[1]) * r + A[2]) * r + A[3]) * r + A[4]) * r + A[5]) * q /
+    return ((((((A[0] * r + A[1]) * r + A[2]) * r + A[3]) * r + A[4]) * r + A[5]) * q) /
            (((((B[0] * r + B[1]) * r + B[2]) * r + B[3]) * r + B[4]) * r + 1);
 
 }
@@ -119,6 +103,27 @@ double RNG::sampleDiscrete(double value, double accProb, ...) {
     va_end(args);
     return val;
 }
+
+double RNG::marsaglia(double alpha, double beta) {
+    // Marsaglia's squeeze method
+    // https://dl.acm.org/citation.cfm?doid=358407.358414
+    if (alpha < 1.0) {
+        // "boost" alpha
+        return pow(marsaglia(1.0 + alpha, beta), 1.0 / alpha);
+    }
+    double d = alpha - 1.0 / 3.0, c = 1.0 / sqrt(9.0 * d);
+    double x, v;
+    for (;;) {
+        do {
+            x = this->probit();
+            v = pow(1 + c * x, 3);
+        } while (v <= 0.0);
+        double u = this->random();
+        if (u < 1.0 - 0.331 * pow(x, 4)) return d * v * beta;
+        if (log(u) < 0.5 * x * x + d * (1 - v + log(v))) return d * v * beta;
+    }
+}
+
 void RNG::setSeed(unsigned int newSeed) {
     this->seed = newSeed;
 }

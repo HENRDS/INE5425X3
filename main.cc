@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     RNG rng(seed);
     cout << std::setprecision(52);
     for (int i = 0; i < n; ++i) {
-        cout << rng.sampleGamma(1, 16) << "\n";
+        cout << rng.sampleGamma(2, 1.23) << "\n";
     }
     return 0;
 }

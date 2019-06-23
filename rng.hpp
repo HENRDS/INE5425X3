@@ -31,14 +31,11 @@ public:
     double sampleLogNormal(double mean, double stddev);
     double sampleTriangular(double min, double mode, double max);
     double sampleDiscrete(double value, double accProb, ...);
-
+    
 private:
     unsigned int seed;
+    double marsaglia(double alpha, double beta);
     double probit();
-};
-template<char c>
-struct match {
-
 };
 
 #endif //INE5425X3_RNG_HPP
