@@ -6,8 +6,6 @@
 #define INE5425X3_TESTS_HPP
 #include <random>
 #include "rng.hpp"
-#include <string>
-
 
 
 class RNGTest {

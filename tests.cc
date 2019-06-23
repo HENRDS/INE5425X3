@@ -4,41 +4,46 @@
 
 #include "tests.hpp"
 #include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
-RNGTest::RNGTest(unsigned int seed): generator(seed) {
-
+RNGTest::RNGTest(unsigned int seed) : generator(seed) {
 
 }
 
-
-
 void RNGTest::testUniform() {
-	int num_testes = 4;
-	int min[num_testes] = {1, 3, 5, 7};
-	int max[num_testes] = {2, 4, 6, 8};
+    // otherwise the compiler won't know the size of the array until runtime.
+    constexpr int num_testes = 4;
+    // the parameters for sampleUniform are double
+    double min[num_testes] = {1, -100, 1e-42, 1e-22},
+           max[num_testes] = {2, 502, 1e13, 2e-22};
+    // creates the generator only once
+    RNG rng(4202369);
 
-	for (int j=0; j<num_testes; j++){
-		cout << "teste " << j << endl;
-		char filename[20];
-		sprintf(filename, "Uniform_%d.txt", j);
+    for (int j = 0; j < num_testes; j++) {
+        cout << "teste " << j << endl;
+        // don't use a fixed-size array, segfault might happen with sprintf.
+        // If you really need it to have fixed side, prefer snprintf.
+        ostringstream stream;
+        stream << "Uniform_"<< j << ".txt";
+        string filename = stream.str();
+        // ofstream closes the file when the variable goes out of scope, so we don't have to do it.
+        // If we had to, it's good to surround everything with a try-finally and
+        // put fclose inside the finally section, so you guarantee that it will be called.
+        ofstream f(filename);
+        if (!f.is_open()) {
+            cout << "Error opening file!" << endl;
+            // don't stop the whole program if this test fails
+            return;
+        }
 
-		FILE *f = fopen(filename, "w");
-		if (f == NULL) {
-			printf("Error opening file!\n");
-			exit(1);
-		}
-
-		RNG rng(4202369);
-		for (int i = 0; i < 1000000; ++i) {
-
-			double var = rng.sampleUniform(min[j], max[j]);
-			fprintf(f, "%f\n", var);
-		}
-
-		fclose(f);
-	}
+        for (int i = 0; i < 1000000; ++i) {
+            f << rng.sampleUniform(min[j], max[j]) << endl;
+        }
+    }
 }
 
 void RNGTest::testExponential() {
