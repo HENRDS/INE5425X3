@@ -17,7 +17,7 @@ public:
     /// @brief Generates a random uniform variate
     /// @returns Variate following the uniform distributuion (0, 1] 
     double random();
-    /// @brief Generates a random uniforme variate
+    /// @brief Generates a random uniform variate
     /// @param min The minimum value of the variate
     /// @param max The maximum value of the variate 
     /// @returns variate following the uniform distributuion (min, max)
