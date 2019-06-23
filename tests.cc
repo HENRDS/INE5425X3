@@ -31,7 +31,7 @@ void RNGTest::testUniform() {
 
 			double var = rng.sampleUniform(min[j], max[j]);
 			cout << i << " = " << var << endl;
-			fprintf(f, "%f\num_testes", var);
+			fprintf(f, "%f\n", var);
 		}
 
 		fclose(f);
