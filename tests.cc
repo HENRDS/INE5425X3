@@ -20,7 +20,11 @@ void RNGTest::testUniform() {
 	int max[num_testes] = {2, 4, 6, 8};
 
 	for (int j=0; j<num_testes; j++){
-		FILE *f = fopen("Uniform.txt", "w");
+		cout << "teste " << j << endl;
+		char filename[20];
+		sprintf(filename, "Uniform_%d.txt", j);
+
+		FILE *f = fopen(filename, "w");
 		if (f == NULL) {
 			printf("Error opening file!\n");
 			exit(1);
@@ -30,7 +34,6 @@ void RNGTest::testUniform() {
 		for (int i = 0; i < 1000000; ++i) {
 
 			double var = rng.sampleUniform(min[j], max[j]);
-			cout << i << " = " << var << endl;
 			fprintf(f, "%f\n", var);
 		}
 
