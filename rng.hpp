@@ -14,7 +14,7 @@ public:
     /// @brief Sets the seed for the random generator
     /// @param newSeed The new value of the seed
     void setSeed(unsigned int newSeed);
-    /// @brief Generates a random uniforme variate
+    /// @brief Generates a random uniform variate
     /// @returns Variate following the uniform distributuion (0, 1] 
     double random();
     /// @brief Generates a random uniforme variate
@@ -23,21 +23,21 @@ public:
     /// @returns variate following the uniform distributuion (min, max)
     double sampleUniform(double min, double max);
     /// @brief Generates a random exponential variate
-    /// @param mean The medium value of the variate
+    /// @param mean The average value of the variate
     /// @returns variate following the exponential distribution (mean)
     double sampleExponential(double mean);
     /// @brief Generates a random erlang variate
-    /// @param mean The scale parameter that represents the medium value
+    /// @param mean The scale parameter that represents the average value
     /// @param M The shape parameter that represents independent exponential variables
     /// @returns variate following the erland distribution (mean, M)
     double sampleErlang(double mean, int M);
     /// @brief Generates a random normal variate
-    /// @param mean The medium value of the variate
+    /// @param mean The average value of the variate
     /// @param stddev The standard deviation of the variate
     /// @returns variate following the normal distribution (mean, stdddev)   
     double sampleNormal(double mean, double stddev);
     /// @brief Generates a random gamma variate
-    /// @param mean The medium value of the variate
+    /// @param mean The average value of the variate
     /// @param alpha The shape parameter alpha of the variate
     /// @returns variate following the gamma distribution (mean, alpha)   
     double sampleGamma(double mean, double alpha);
@@ -51,10 +51,10 @@ public:
     /// @brief Generates a random weibull variate
     /// @param alpha The shape parameter alpha of the variate
     /// @param scale The scale parameter of the variate
-    /// @returns variate following the wibull distribution (mean, alpha)   
+    /// @returns variate following the weibull distribution (alpha, scale)   
     double sampleWeibull(double alpha, double scale);
     /// @brief Generates a random lognormal variate
-    /// @param mean The medium value of the variate
+    /// @param mean The average value of the variate
     /// @param stddev The standard deviation of the variate
     /// @returns variate following the lognormal distribution (mean, stdddev)  
     double sampleLogNormal(double mean, double stddev);
@@ -72,7 +72,9 @@ public:
     
 private:
     unsigned int seed;
+    /// @brief Generates a gamma distribution 
     double marsaglia(double alpha, double beta);
+    /// @brief Generates a normal distribution centered on zero
     double probit();
 };
 
