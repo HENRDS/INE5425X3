@@ -15,9 +15,11 @@ int main(int argc, char* argv[]) {
     int n = 1000000;
     RNG rng(seed);
     cout << std::setprecision(52);
-    for (int i = 0; i < n; ++i) {
-        cout << rng.sampleGamma(2, 1.23) << "\n";
-    }
+   // for (int i = 0; i < n; ++i) {
+    //    cout << rng.sampleGamma(1, 16) << "\n";
+    //}
+    RNGTest tst(seed);
+    tst.testUniform();
     return 0;
 }
 
