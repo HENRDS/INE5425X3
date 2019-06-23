@@ -8,6 +8,8 @@
 
 RNG::RNG(unsigned int seed) : seed(seed) {
 }
+
+// @brief This method generates pseudorandom numbers using the xorshift method
 double RNG::random() {
     constexpr auto upperBound = static_cast<double>(static_cast<unsigned int>(-1)) + 1.0;
     this->seed ^= this->seed << 13u;
