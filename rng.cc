@@ -1,5 +1,5 @@
 //
-// Created by henry on 6/3/19.
+// Created by henry, jacyara, mathias and rene on 6/3/19.
 //
 
 #include "rng.hpp"
