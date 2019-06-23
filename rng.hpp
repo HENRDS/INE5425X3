@@ -72,9 +72,9 @@ public:
     
 private:
     unsigned int seed;
-    /// @brief Generates a gamma distribution 
+    /// @brief Generates a gamma distribution. Called by sampleGamma.
     double marsaglia(double alpha, double beta);
-    /// @brief Generates a normal distribution centered on zero
+    /// @brief Generates a normal distribution centered on zero. Called by sampleNormal and marsaglia.
     double probit();
 };
 
