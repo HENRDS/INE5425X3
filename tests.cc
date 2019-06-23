@@ -27,7 +27,7 @@ void RNGTest::testUniform() {
 		}
 
 		RNG rng(4202369);
-		for (int i = 0; i < 10000000; ++i) {
+		for (int i = 0; i < 1000000; ++i) {
 
 			double var = rng.sampleUniform(min[j], max[j]);
 			cout << i << " = " << var << endl;
