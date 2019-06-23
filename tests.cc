@@ -15,8 +15,29 @@ RNGTest::RNGTest(unsigned int seed): generator(seed) {
 
 
 void RNGTest::testUniform() {
+	int num_testes = 4;
+	int min[num_testes] = {1, 3, 5, 7};
+	int max[num_testes] = {2, 4, 6, 8};
 
+	for (int j=0; j<num_testes; j++){
+		FILE *f = fopen("Uniform.txt", "w");
+		if (f == NULL) {
+			printf("Error opening file!\n");
+			exit(1);
+		}
+
+		RNG rng(4202369);
+		for (int i = 0; i < 10000000; ++i) {
+
+			double var = rng.sampleUniform(min[j], max[j]);
+			cout << i << " = " << var << endl;
+			fprintf(f, "%f\num_testes", var);
+		}
+
+		fclose(f);
+	}
 }
+
 void RNGTest::testExponential() {
 
 }
