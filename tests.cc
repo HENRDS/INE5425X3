@@ -1,5 +1,5 @@
 //
-// Created by henry on 6/12/19.
+// Created by henry, jacyara, mathias and rene on 6/12/19.
 //
 
 #include "tests.hpp"
@@ -46,7 +46,7 @@ void RNGTest::testUniform() {
             // don't stop the whole program if this test fails
             return;
         }
-        double gen_min,
+        double gen_min;
         for (int i = 0; i < 1000000; ++i) {
             f << this->generator.sampleUniform(min[j], max[j]) << "\n";
         }
@@ -106,7 +106,7 @@ void RNGTest::testErlang() {
 void RNGTest::testNormal() {
     constexpr int num_testes = 4;
     double mean[num_testes] = {11, 7.2e20, -87, 2e-24},
-           stddev[num_testes] = {1e-3, 2012,  4, 7};
+           stddev[num_testes] = {1e-3, 2012e18,  4, 7};
 
     RNG rng(4202369);
 
@@ -130,6 +130,30 @@ void RNGTest::testNormal() {
 
 }
 void RNGTest::testGamma() {
+    constexpr int num_testes = 4;
+    double mean[num_testes] = {1e-2, 0, 54.9, -2e4},
+           alpha[num_testes] = {0.2, 3.5, 9.1, 45.666};
+
+    RNG rng(4202369);
+
+    for (int j = 0; j < num_testes; j++) {
+        cout << "teste " << j << endl;
+
+        ostringstream stream;
+        stream << "Gamma_"<< j << ".txt";
+        string filename = stream.str();
+
+        ofstream f(filename);
+        if (!f.is_open()) {
+            cout << "Error opening file!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < 1000000; ++i) {
+            f << rng.sampleGamma(mean[j], alpha[j]) << endl;
+        }
+    }
+
 
 }
 void RNGTest::testBeta() {
