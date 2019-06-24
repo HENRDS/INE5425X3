@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     //    cout << rng.sampleGamma(1, 16) << "\n";
     //}
     RNGTest tst(seed);
-    tst.testUniform();
+    tst.testErlang();
     return 0;
 }
 
