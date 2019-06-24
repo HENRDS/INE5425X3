@@ -23,6 +23,7 @@ public:
     void testLogNormal();
     void testTriangular();
     void testDiscrete();
+    void testSetSeed();
     void testAll();
 private:
     bool almost_equal(double x, double y);

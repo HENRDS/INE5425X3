@@ -129,4 +129,7 @@ double RNG::marsaglia(double alpha, double beta) {
 void RNG::setSeed(unsigned int newSeed) {
     this->seed = newSeed;
 }
+unsigned int RNG::getSeed() const {
+    return this->seed;
+}
 

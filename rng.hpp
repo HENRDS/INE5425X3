@@ -69,6 +69,10 @@ public:
     /// @param accProb The value of the accumulated probability
     /// @returns variate following the discrete distribution (value, accProb, ...) 
     double sampleDiscrete(double value, double accProb, ...);
+
+    /// @brief Seed getter
+    /// @returns The current value of the seed
+    unsigned int getSeed() const;
     
 private:
     unsigned int seed;
@@ -76,6 +80,7 @@ private:
     double marsaglia(double alpha, double beta);
     /// @brief Generates a normal distribution centered on zero. Called by sampleNormal and marsaglia.
     double probit();
+
 };
 
 #endif //INE5425X3_RNG_HPP
