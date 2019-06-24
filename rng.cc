@@ -46,7 +46,7 @@ double RNG::sampleWeibull(double alpha, double scale) {
     return pow(-1.0 / alpha * log(1.0 - this->random()), 1.0 / scale);
 }
 double RNG::sampleLogNormal(double mean, double stddev) {
-    return exp(this->sampleNormal(mean, stddev));
+    return  exp(this->sampleNormal(mean, stddev));
 }
 double RNG::sampleTriangular(double min, double mode, double max) {
     double u = this->random(), f = (mode - min) / (max - min);

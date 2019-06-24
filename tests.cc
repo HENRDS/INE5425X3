@@ -164,7 +164,7 @@ void RNGTest::testNormal() {
 }
 void RNGTest::testGamma() {
     constexpr int num_testes = 4;
-    double mean[num_testes] = {1e-2, 0, 54.9, -2e4},
+    double mean[num_testes] = {1e-2, 1.1, 54.9, -2e4},
            alpha[num_testes] = {0.2, 3.5, 9.1, 45.666};
     cout << "Gamma" << endl;
     for (int j = 0; j < num_testes; j++) {
@@ -199,8 +199,8 @@ void RNGTest::testBeta() {
     constexpr int num_testes = 4;
     double alpha[num_testes] = {0.5, 1.2, 1e2, 3e3},
            beta[num_testes] = {0.3, 5.6, 2e7, 6e-2},
-           infLimit[num_testes] = {3, 5e-25, -2, 3.33},
-           supLimit[num_testes] = {5, 4e-25, 8e10, 6.66};
+           infLimit[num_testes] = {3, 4e-25, -2, 3.33},
+           supLimit[num_testes] = {5, 5e-25, 8e10, 6.66};
     cout << "Beta" << endl;
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " alpha: " << alpha[j] << " beta: " << beta[j]
@@ -257,8 +257,8 @@ void RNGTest::testWeibull() {
 }
 void RNGTest::testLogNormal() {
     constexpr int num_testes = 4;
-    double mean[num_testes] = {-55e33, -2.338, 0.682, 369.666},
-           stddev[num_testes] = {144, 5e27, 87.36, 4512.7};
+    double mean[num_testes] = {55, 0, 0.682, 369.666},
+           stddev[num_testes] = {12, 0.25, 87.36, 4.7};
     cout << "Log-Normal" << endl;
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " mean: " << mean[j] << " stddev: " << stddev[j] << endl;
