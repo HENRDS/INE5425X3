@@ -14,7 +14,8 @@ Implementation of a Pseudo random number generator that generates variates follo
 - Discrete probability distribution
 
 ## Quickstart
-To compile the program just run the [compile script](compile.sh).
+To compile the program just run the [compile script](compile.sh). It will compile the executable `INE5425` to the `bin`
+folder.
 
 
 

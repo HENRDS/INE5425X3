@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
-
 set -eu
 shopt -s extglob nullglob
 
-if [[ -d bin/ ]]; then 
-    rm -rf bin/**
-else
-    mkdir bin
+if [[ ! -d ./bin/ ]]; then
+    mkdir ./bin
+    echo "Creating ./bin"
 fi
+
 if type cmake &> /dev/null; then
     cd bin
-    cmake ..
+    if [[ ../CMakeLists.txt -nt ./bin/CMakeCache.txt ]]; then
+        cmake ..
+    fi
     make
 else
     for f in *.cc; do
