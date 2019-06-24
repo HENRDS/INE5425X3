@@ -8,18 +8,16 @@
 #include <fstream>
 #include <cstdarg>
 #include <iomanip>
+#include <limits>
 
 using namespace std;
 
-RNGTest::RNGTest(unsigned int seed, unsigned int digits) : generator(seed), digits(digits) {
-
+RNGTest::RNGTest(unsigned int seed, unsigned int digits, double error) : generator(seed), digits(digits), error(error) {
 }
 
 void RNGTest::testUniform() {
     cout << "Test Uniform" << endl;
-    // otherwise the compiler won't know the size of the array until runtime.
     constexpr int num_testes = 4;
-    // the parameters for sampleUniform are double
     double min[num_testes] = {1, -100, 1e-42, 1e-22}, max[num_testes] = {2, 502, 1e13, 2e-22};
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << "min: " << min[j] << " max: " << max[j];
@@ -32,9 +30,19 @@ void RNGTest::testUniform() {
             cout << " FAILED! - Error opening file." << endl;
             return;
         }
+
+        double gen_min = numeric_limits<double>::infinity(), gen_max = - gen_min, x = 0;
         for (int i = 0; i < 1000000; ++i) {
-            f << this->generator.sampleUniform(min[j], max[j]) << "\n";
+            x = this->generator.sampleUniform(min[j], max[j]);
+            gen_min = std::min(x, gen_min);
+            gen_max = std::max(x, gen_max);
+            f << x << "\n";
         }
+
+        if (this->almost_equal(gen_min, min[j]) && this->almost_equal(gen_max, max[j]))
+            cout << " PASSED!" << endl;
+        else
+            cout << " FAILED! - gerado min: " << gen_min << " max: " << gen_max << endl;
     }
 }
 
@@ -42,7 +50,6 @@ void RNGTest::testExponential() {
     cout << "Test Uniform" << endl;
     constexpr int num_testes = 4;
     double mean[num_testes] = {7e-31, 4e27, 1024, -33};
-    RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " mean: " << mean[j] << endl;
@@ -59,7 +66,7 @@ void RNGTest::testExponential() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleExponential(mean[j]) << endl;
+            f << this->generator.sampleExponential(mean[j]) << "\n";
         }
     }
 
@@ -69,7 +76,7 @@ void RNGTest::testErlang() {
     double mean[num_testes] = {7e-2, 1.698, 89, -8e12},
            M[num_testes] = {1, 6, 7, 165};
 
-    RNG rng(4202369);
+    
 
     for (int j = 0; j < num_testes; j++) {
         cout << "teste " << j << endl;
@@ -86,7 +93,7 @@ void RNGTest::testErlang() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleErlang(mean[j], M[j]) << endl;
+            f << this->generator.sampleErlang(mean[j], M[j]) << "\n";
         }
     }
 
@@ -95,8 +102,6 @@ void RNGTest::testNormal() {
     constexpr int num_testes = 4;
     double mean[num_testes] = {11, 7.2e20, -87, 2e-24},
            stddev[num_testes] = {1e-3, 2012e18,  4, 7};
-
-    RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
         cout << "teste " << j << endl;
@@ -113,7 +118,7 @@ void RNGTest::testNormal() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleNormal(mean[j], stddev[j]) << endl;
+            f << this->generator.sampleNormal(mean[j], stddev[j]) << "\n";
         }
     }
 
@@ -122,8 +127,6 @@ void RNGTest::testGamma() {
     constexpr int num_testes = 4;
     double mean[num_testes] = {1e-2, 0, 54.9, -2e4},
            alpha[num_testes] = {0.2, 3.5, 9.1, 45.666};
-
-    RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
         cout << "teste " << j << endl;
@@ -140,7 +143,7 @@ void RNGTest::testGamma() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleGamma(mean[j], alpha[j]) << endl;
+            f << this->generator.sampleGamma(mean[j], alpha[j]) << "\n";
         }
     }
 
@@ -152,8 +155,6 @@ void RNGTest::testBeta() {
            beta[num_testes] = {0.3, 5.6, 2e22, 6e-2},
            infLimit[num_testes] = {3, 5e-25, -2, 3.33},
            supLimit[num_testes] = {5, 4e-25, 8e10, 6.66};
-
-    RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
         cout << "teste " << j << endl;
@@ -170,7 +171,7 @@ void RNGTest::testBeta() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleBeta(alpha[j], beta[j], infLimit[j], supLimit[j]) << endl;
+            f << this->generator.sampleBeta(alpha[j], beta[j], infLimit[j], supLimit[j]) << "\n";
         }
     }
 }
@@ -179,7 +180,6 @@ void RNGTest::testWeibull() {
     double alpha[num_testes] = {1.5, 0.001,  2.11, 45.2},
            scale[num_testes] = {3.1415e2, 125, 35.55, 3e-2};
     cout << "Weibull" << endl;
-    RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " alpha " << endl;
@@ -195,7 +195,7 @@ void RNGTest::testWeibull() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleWeibull(alpha[j], scale[j]) << endl;
+            f << this->generator.sampleWeibull(alpha[j], scale[j]) << "\n";
         }
     }
 
@@ -204,8 +204,6 @@ void RNGTest::testLogNormal() {
     constexpr int num_testes = 4;
     double mean[num_testes] = {-55e33, -2.338, 0.682, 369.666},
            stddev[num_testes] = {144, 5e27, 87.36, 4512.7};
-
-    RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
         cout << "teste " << j << endl;
@@ -222,7 +220,7 @@ void RNGTest::testLogNormal() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleLogNormal(mean[j], stddev[j]) << endl;
+            f << this->generator.sampleLogNormal(mean[j], stddev[j]) << "\n";
         }
     }
 }
@@ -231,8 +229,6 @@ void RNGTest::testTriangular() {
     double min[num_testes] = {2e-30, -7.33, -51e2, 12},
            mode[num_testes] = {0, 8.66, -37e1, 445.6},
            max[num_testes] = {7e27, 100.5, -20e1, 447};
-
-    RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
         cout << "teste " << j << endl;
@@ -249,7 +245,7 @@ void RNGTest::testTriangular() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleTriangular(min[j], mode[j], max[j]) << endl;
+            f << this->generator.sampleTriangular(min[j], mode[j], max[j]) << "\n";
         }
     }
 }
@@ -290,6 +286,9 @@ void RNGTest::testAll() {
     this->testTriangular();
     this->testUniform();
     this->testWeibull();
+}
+bool RNGTest::almost_equal(double x, double y) {
+    return abs(x - y) < this->error;
 }
 
 
