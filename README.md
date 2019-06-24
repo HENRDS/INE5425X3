@@ -1,17 +1,16 @@
 # X3
 
-Implementation of a Pseudo random number generator that generates variates following these probability distributions:
-- Random number generation
-- Uniform distribution
-- Exponential distribution
-- Erlang distribution
-- Normal distribution
-- Gamma distribution
-- Beta distribution
-- Weibull distribution
-- LogNormal distribution
-- Triangular distribution
-- Discrete probability distribution
+Implementation of a Pseudo random number generator that generates variates following:
+- An uniform distribution
+- An exponential distribution
+- An erlang distribution
+- A normal distribution
+- A gamma distribution
+- A beta distribution
+- A weibull distribution
+- A logNormal distribution
+- A triangular distribution
+- A discrete probability distribution
 
 ## Quickstart
 To compile the program just run the [compile script](compile.sh). It will compile the executable `INE5425` to the `bin`
@@ -36,4 +35,4 @@ In Xorshift the resulting numbers can be considered equally random, that is, the
 
 
 
-Avaliable at [Github](https://github.com/HENRDS/INE5425X3).
+This project is avaliable on [Github](https://github.com/HENRDS/INE5425X3).
