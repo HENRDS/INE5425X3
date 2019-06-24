@@ -6,7 +6,9 @@
 #define INE5425X3_TESTS_HPP
 #include <random>
 #include "rng.hpp"
-
+#include <vector>
+#include <type_traits>
+#include <string>
 
 class RNGTest {
 public:
@@ -23,7 +25,6 @@ public:
     void testDiscrete();
     void testAll();
 private:
-
     RNG generator;
 };
 
