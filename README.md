@@ -30,3 +30,10 @@ You can be sure that the sequence of numbers produced by a Pseudo-RNG, though pe
 In some cases it is useful to use fewer operations and still achieve an acceptable degree of randomness. To do this, we need to find a small combination of bitwise operations that meet certain randomness criteria and pass certain statistical tests. One solution proposed by George Marsaglia is in the form of Xorshift. 
 
 In Xorshift the resulting numbers can be considered equally random, that is, their randomness is independent of their position. Marsaglia showed that a generator involving three shifts and three XOR operations satisfy various statistical tests of randomness (including ones that poorer generators such as LCGs fail).
+
+
+
+
+
+
+Avaliable at [Github](https://github.com/HENRDS/INE5425X3).
