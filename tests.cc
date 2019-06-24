@@ -224,7 +224,7 @@ void RNGTest::testDiscrete() {
         constexpr int testCount = 4;
         std::vector<ofstream> streams;
         for (int i = 0; i < testCount; ++i) {
-            streams.emplace_back(ofstream("../Testes/DISC_" + to_string(i)));
+            streams.emplace_back(ofstream("../Testes/Discrete" + to_string(i) + ".txt"));
             streams[i] << setprecision(52);
         }
         double x;
