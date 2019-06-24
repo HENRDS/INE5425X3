@@ -12,7 +12,7 @@
 
 class RNGTest {
 public:
-    explicit RNGTest(unsigned int seed, unsigned int digits = 4, double error = 1e-3);
+    explicit RNGTest(unsigned int seed, unsigned int digits = 4, double error = 1e-2);
     void testUniform();
     void testExponential();
     void testErlang();

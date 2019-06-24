@@ -100,7 +100,7 @@ void RNGTest::testErlang() {
     double mean[num_testes] = {7e-2, 1.698, 89, -8e12};
     int M[num_testes] = {1, 6, 7, 165};
     cout << "Erlang" << endl;
-    
+
 
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " mean: " << mean[j] << " M: " << M[j] << endl;
@@ -132,7 +132,7 @@ void RNGTest::testErlang() {
 void RNGTest::testNormal() {
     constexpr int num_testes = 4;
     double mean[num_testes] = {11, 7.2e20, -87, 2e-24},
-           stddev[num_testes] = {1e-3, 2012e18,  4, 7};
+           stddev[num_testes] = {5, 2012e18,  4, 7};
     cout << "Normal" << endl;
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " mean: " << mean[j] << " stddev: " << stddev[j] << endl;
@@ -259,7 +259,7 @@ void RNGTest::testLogNormal() {
     constexpr int num_testes = 4;
     double mean[num_testes] = {-55e33, -2.338, 0.682, 369.666},
            stddev[num_testes] = {144, 5e27, 87.36, 4512.7};
-
+    cout << "Log-Normal" << endl;
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " mean: " << mean[j] << " stddev: " << stddev[j] << endl;
 
@@ -292,7 +292,7 @@ void RNGTest::testTriangular() {
     double min[num_testes] = {2e-30, -7.33, -51e2, 12},
            mode[num_testes] = {0, 8.66, -37e1, 445.6},
            max[num_testes] = {7e27, 100.5, -20e1, 447};
-
+    cout << "Triangular" << endl;
     for (int j = 0; j < num_testes; j++) {
         cout << "Test " << j << " min: " << min[j] << " mode: " << mode[j] << " max: " << max[j] << endl;
         ostringstream stream;
@@ -334,6 +334,7 @@ void RNGTest::testDiscrete() {
 
         constexpr int testCount = 4;
         std::vector<ofstream> streams;
+        cout << "Discrete" << endl;
         for (int i = 0; i < testCount; ++i) {
             streams.emplace_back(ofstream("../Testes/Discrete" + to_string(i) + ".txt"));
             streams[i] << setprecision(this->digits);
