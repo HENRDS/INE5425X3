@@ -87,8 +87,8 @@ void RNGTest::testDiscrete() {
 #define TEST_CASES(F) \
         F(0, 1,   0.2,  2,   0.2004, 3,   .5, 4,  .69, 5, 1); \
         F(1, 1e4, 1e-3, 1e3, 1e-2,   100, .1, 10, 1); \
-        F(2, 1, 0.16667, 2, 0.33334, 3, 0.5, 4, 0.66667, 5, 0.83334, 6, 1)
-
+        F(2, 1, 0.16667, 2, 0.33334, 3, 0.5, 4, 0.66667, 5, 0.83334, 6, 1);\
+        F(3, 23, 0.5, 32, 1.0)
         constexpr int testCount = 4;
         std::vector<ofstream> streams;
         for (int i = 0; i < testCount; ++i) {
