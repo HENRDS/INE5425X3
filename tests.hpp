@@ -12,7 +12,7 @@
 
 class RNGTest {
 public:
-    explicit RNGTest(unsigned int seed);
+    explicit RNGTest(unsigned int seed, unsigned int digits = 4);
     void testUniform();
     void testExponential();
     void testErlang();
@@ -25,6 +25,8 @@ public:
     void testDiscrete();
     void testAll();
 private:
+    // Number of digits of decimal output
+    unsigned int digits;
     RNG generator;
 };
 
