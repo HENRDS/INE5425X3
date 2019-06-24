@@ -107,7 +107,7 @@ void RNGTest::testNormal() {
         cout << "teste " << j << endl;
 
         ostringstream stream;
-        stream << "Normal_"<< j << ".txt";
+        stream << "../Testes/Normal_"<< j << ".txt";
         string filename = stream.str();
 
         ofstream f(filename);
@@ -134,10 +134,11 @@ void RNGTest::testGamma() {
         cout << "teste " << j << endl;
 
         ostringstream stream;
-        stream << "Gamma_"<< j << ".txt";
+        stream << "../Testes/Gamma_"<< j << ".txt";
         string filename = stream.str();
 
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -151,7 +152,32 @@ void RNGTest::testGamma() {
 
 }
 void RNGTest::testBeta() {
+    constexpr int num_testes = 4;
+    double alpha[num_testes] = {0.5, 1.2, 1e-22, 3e3},
+           beta[num_testes] = {0.3, 5.6, 2e22, 6e-2},
+           infLimit[num_testes] = {3, 5e-25, -2, 3.33},
+           supLimit[num_testes] = {5, 4e-25, 8e10, 6.66};
 
+    RNG rng(4202369);
+
+    for (int j = 0; j < num_testes; j++) {
+        cout << "teste " << j << endl;
+
+        ostringstream stream;
+        stream << "../Testes/Beta_"<< j << ".txt";
+        string filename = stream.str();
+
+        ofstream f(filename);
+        f << setprecision(52);
+        if (!f.is_open()) {
+            cout << "Error opening file!" << endl;
+            return;
+        }
+
+        for (int i = 0; i < 1000000; ++i) {
+            f << rng.sampleGamma(alpha[j], beta[j], infLimit[j], supLimit[j]) << endl;
+        }
+    }
 }
 void RNGTest::testWeibull() {
     constexpr int num_testes = 4;
@@ -191,7 +217,7 @@ void RNGTest::testLogNormal() {
         cout << "teste " << j << endl;
 
         ostringstream stream;
-        stream << "LogNormal_"<< j << ".txt";
+        stream << "../Testes/LogNormal_"<< j << ".txt";
         string filename = stream.str();
 
         ofstream f(filename);
