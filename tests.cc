@@ -257,7 +257,7 @@ void RNGTest::testWeibull() {
 }
 void RNGTest::testLogNormal() {
     constexpr int num_testes = 4;
-    double mean[num_testes] = {55, 0, 0.682, 369.666},
+    double mean[num_testes] = {55, 1, 1.682, 366},
            stddev[num_testes] = {12, 0.25, 87.36, 4.7};
     cout << "Log-Normal" << endl;
     for (int j = 0; j < num_testes; j++) {

@@ -18,5 +18,5 @@ int main(int argc, char* argv[]) {
 
 void test(unsigned int seed) {
     RNGTest test(seed);
-    test.testLogNormal();
+    test.testAll();
 }
