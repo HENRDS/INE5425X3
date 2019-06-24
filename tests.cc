@@ -129,12 +129,11 @@ void RNGTest::testWeibull() {
     constexpr int num_testes = 4;
     double alpha[num_testes] = {1.5, 0.001,  2.11, 45.2},
            scale[num_testes] = {3.1415e2, 125, 35.55, 3e-2};
-
+    cout << "Weibull" << endl;
     RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
-        cout << "teste " << j << endl;
-
+        cout << "Test " << j << " alpha " << endl;
         ostringstream stream;
         stream << "../Testes/Weibull_"<< j << ".txt";
         string filename = stream.str();
