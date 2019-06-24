@@ -7,22 +7,12 @@
 #include <sstream>
 #include <fstream>
 #include <cstdarg>
+#include <iomanip>
+
 using namespace std;
 
 RNGTest::RNGTest(unsigned int seed) : generator(seed) {
 
-}
-
-double mean(int n, double val, ...) {
-    va_list args;
-    va_start(args, val);
-    double avg = val;
-    int t = 1;
-    while (t <= n) {
-        avg += (va_arg(args, double) - avg) / t;
-        t++;
-    }
-    return avg;
 }
 
 void RNGTest::testUniform() {
@@ -35,12 +25,13 @@ void RNGTest::testUniform() {
         // don't use a fixed-size array, segfault might happen with sprintf.
         // If you really need it to have fixed side, prefer snprintf.
         ostringstream stream;
-        stream << "./data/Uniform_" << j << ".txt";
+        stream << "../Testes/Uniform_" << j << ".txt";
         string filename = stream.str();
         // ofstream closes the file when the variable goes out of scope, so we don't have to do it.
         // If we had to, it's good to surround everything with a try-finally and
         // put fclose inside the finally section, so you guarantee that it will be called.
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             // don't stop the whole program if this test fails
@@ -62,10 +53,11 @@ void RNGTest::testExponential() {
         cout << "teste " << j << endl;
 
         ostringstream stream;
-        stream << "Exponential_"<< j << ".txt";
+        stream << "../Testes/Exponential_"<< j << ".txt";
         string filename = stream.str();
 
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -88,10 +80,11 @@ void RNGTest::testErlang() {
         cout << "teste " << j << endl;
 
         ostringstream stream;
-        stream << "Erlang_"<< j << ".txt";
+        stream << "../Testes/Erlang_"<< j << ".txt";
         string filename = stream.str();
 
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -118,6 +111,7 @@ void RNGTest::testNormal() {
         string filename = stream.str();
 
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -170,10 +164,11 @@ void RNGTest::testWeibull() {
         cout << "teste " << j << endl;
 
         ostringstream stream;
-        stream << "Weibull_"<< j << ".txt";
+        stream << "../Testes/Weibull_"<< j << ".txt";
         string filename = stream.str();
 
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -200,6 +195,7 @@ void RNGTest::testLogNormal() {
         string filename = stream.str();
 
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -222,10 +218,11 @@ void RNGTest::testTriangular() {
         cout << "teste " << j << endl;
 
         ostringstream stream;
-        stream << "Triangular_"<< j << ".txt";
+        stream << "../Testes/Triangular_"<< j << ".txt";
         string filename = stream.str();
 
         ofstream f(filename);
+        f << setprecision(52);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -251,7 +248,8 @@ void RNGTest::testDiscrete() {
         constexpr int testCount = 4;
         std::vector<ofstream> streams;
         for (int i = 0; i < testCount; ++i) {
-            streams.emplace_back(ofstream("DISC_" + to_string(i)));
+            streams.emplace_back(ofstream("../Testes/Discrete" + to_string(i) + ".txt"));
+            streams[i] << setprecision(52);
         }
         double x;
         for (int i = 0; i < 1000000; ++i) {
