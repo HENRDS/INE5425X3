@@ -16,28 +16,22 @@ RNGTest::RNGTest(unsigned int seed) : generator(seed) {
 }
 
 void RNGTest::testUniform() {
+    cout << "Test Uniform" << endl;
     // otherwise the compiler won't know the size of the array until runtime.
     constexpr int num_testes = 4;
     // the parameters for sampleUniform are double
     double min[num_testes] = {1, -100, 1e-42, 1e-22}, max[num_testes] = {2, 502, 1e13, 2e-22};
     for (int j = 0; j < num_testes; j++) {
-        cout << "teste " << j << endl;
-        // don't use a fixed-size array, segfault might happen with sprintf.
-        // If you really need it to have fixed side, prefer snprintf.
+        cout << "Test " << j << "min: " << min[j] << " max: " << max[j];
         ostringstream stream;
         stream << "../Testes/Uniform_" << j << ".txt";
         string filename = stream.str();
-        // ofstream closes the file when the variable goes out of scope, so we don't have to do it.
-        // If we had to, it's good to surround everything with a try-finally and
-        // put fclose inside the finally section, so you guarantee that it will be called.
         ofstream f(filename);
         f << setprecision(52);
         if (!f.is_open()) {
-            cout << "Error opening file!" << endl;
-            // don't stop the whole program if this test fails
+            cout << " FAILED! - Error opening file." << endl;
             return;
         }
-        double gen_min,
         for (int i = 0; i < 1000000; ++i) {
             f << this->generator.sampleUniform(min[j], max[j]) << "\n";
         }
@@ -45,12 +39,13 @@ void RNGTest::testUniform() {
 }
 
 void RNGTest::testExponential() {
+    cout << "Test Uniform" << endl;
     constexpr int num_testes = 4;
     double mean[num_testes] = {7e-31, 4e27, 1024, -33};
     RNG rng(4202369);
 
     for (int j = 0; j < num_testes; j++) {
-        cout << "teste " << j << endl;
+        cout << "Test " << j << " mean: " << mean[j];
 
         ostringstream stream;
         stream << "../Testes/Exponential_"<< j << ".txt";
@@ -213,7 +208,7 @@ void RNGTest::testDiscrete() {
     /* A little bit of pre-processor sorcery */
 #define CALL(idx, value, accProb, ...)\
     x = this->generator.sampleDiscrete(value, accProb, __VA_ARGS__);\
-    streams[idx] << x
+    streams[idx] << x << "\n"
 // Remember to update testCount if you change the macro table!
 // F is for the macro CALL
 #define TEST_CASES(F) \
