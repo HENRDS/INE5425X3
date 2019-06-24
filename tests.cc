@@ -250,9 +250,9 @@ void RNGTest::testTriangular() {
     }
 }
 void RNGTest::testDiscrete() {
-    /* A little bit of pre-processor sorcery */
+    /* A little bit of pre-processor sorcery so we can call the sampleDiscrete easily */
 #define CALL(idx, value, accProb, ...)\
-    x = this->generator.sampleDiscrete(value, accProb, __VA_ARGS__);\
+    x = this->generator.sampleDiscrete(value, accProb, #__VA_ARGS__);\
     streams[idx] << x << "\n"
 // Remember to update testCount if you change the macro table!
 // F is for the macro CALL
@@ -261,6 +261,8 @@ void RNGTest::testDiscrete() {
         F(1, 1e-4, 1e-3, 1e3, 1e-2,   100, .1, 10, 1); \
         F(2, 1, 0.16667, 2, 0.33334, 3, 0.5, 4, 0.66667, 5, 0.83334, 6, 1);\
         F(3, 23, 0.5, 32, 1.0)
+
+
         constexpr int testCount = 4;
         std::vector<ofstream> streams;
         for (int i = 0; i < testCount; ++i) {
