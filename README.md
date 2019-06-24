@@ -13,6 +13,11 @@ Implementation of a Pseudo random number generator that generates variates follo
 - Triangular distribution
 - Discrete probability distribution
 
+## Quickstart
+To compile the program just run the [compile script](compile.sh).
+
+
+
 ## Why use PRNG instead of TRNG?
 
 A great advantage of PRNGs (Pseudo Random Number Generators) over TRNGs (True Random Number Generators) is that you can reproduce the same sequence of numbers in another time by simply knowing the starting point of the sequence (also known as the seed) - thus it is also periodic and the sequence will repeat itself in due time. 

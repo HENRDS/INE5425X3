@@ -11,7 +11,7 @@
 
 using namespace std;
 
-RNGTest::RNGTest(unsigned int seed) : generator(seed) {
+RNGTest::RNGTest(unsigned int seed, unsigned int digits) : generator(seed), digits(digits) {
 
 }
 
@@ -27,12 +27,11 @@ void RNGTest::testUniform() {
         stream << "../Testes/Uniform_" << j << ".txt";
         string filename = stream.str();
         ofstream f(filename);
-        f << setprecision(52);
+        f << setprecision(this->digits);
         if (!f.is_open()) {
             cout << " FAILED! - Error opening file." << endl;
             return;
         }
-        double gen_min =
         for (int i = 0; i < 1000000; ++i) {
             f << this->generator.sampleUniform(min[j], max[j]) << "\n";
         }
@@ -53,7 +52,7 @@ void RNGTest::testExponential() {
         string filename = stream.str();
 
         ofstream f(filename);
-        f << setprecision(52);
+        f << setprecision(this->digits);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -80,7 +79,7 @@ void RNGTest::testErlang() {
         string filename = stream.str();
 
         ofstream f(filename);
-        f << setprecision(52);
+        f << setprecision(this->digits);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -107,7 +106,7 @@ void RNGTest::testNormal() {
         string filename = stream.str();
 
         ofstream f(filename);
-        f << setprecision(52);
+        f << setprecision(this->digits);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -139,7 +138,7 @@ void RNGTest::testWeibull() {
         string filename = stream.str();
 
         ofstream f(filename);
-        f << setprecision(52);
+        f << setprecision(this->digits);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -166,7 +165,7 @@ void RNGTest::testLogNormal() {
         string filename = stream.str();
 
         ofstream f(filename);
-        f << setprecision(52);
+        f << setprecision(this->digits);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -193,7 +192,7 @@ void RNGTest::testTriangular() {
         string filename = stream.str();
 
         ofstream f(filename);
-        f << setprecision(52);
+        f << setprecision(this->digits);
         if (!f.is_open()) {
             cout << "Error opening file!" << endl;
             return;
@@ -220,7 +219,7 @@ void RNGTest::testDiscrete() {
         std::vector<ofstream> streams;
         for (int i = 0; i < testCount; ++i) {
             streams.emplace_back(ofstream("../Testes/Discrete" + to_string(i) + ".txt"));
-            streams[i] << setprecision(52);
+            streams[i] << setprecision(this->digits);
         }
         double x;
         for (int i = 0; i < 1000000; ++i) {
