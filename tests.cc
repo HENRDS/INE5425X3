@@ -355,7 +355,6 @@ void RNGTest::testAll() {
     this->testErlang();
     this->testExponential();
     this->testGamma();
-    this->testLogNormal();
     this->testNormal();
     this->testTriangular();
     this->testUniform();
