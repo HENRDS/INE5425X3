@@ -151,8 +151,8 @@ void RNGTest::testGamma() {
 }
 void RNGTest::testBeta() {
     constexpr int num_testes = 4;
-    double alpha[num_testes] = {0.5, 1.2, 1e-22, 3e3},
-           beta[num_testes] = {0.3, 5.6, 2e22, 6e-2},
+    double alpha[num_testes] = {0.5, 1.2, 1e2, 3e3},
+           beta[num_testes] = {0.3, 5.6, 2e7, 6e-2},
            infLimit[num_testes] = {3, 5e-25, -2, 3.33},
            supLimit[num_testes] = {5, 4e-25, 8e10, 6.66};
 
