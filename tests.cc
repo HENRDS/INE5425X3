@@ -170,7 +170,7 @@ void RNGTest::testBeta() {
         }
 
         for (int i = 0; i < 1000000; ++i) {
-            f << rng.sampleGamma(alpha[j], beta[j], infLimit[j], supLimit[j]) << endl;
+            f << rng.sampleBeta(alpha[j], beta[j], infLimit[j], supLimit[j]) << endl;
         }
     }
 }
