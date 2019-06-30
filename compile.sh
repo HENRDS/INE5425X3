@@ -10,7 +10,7 @@ fi
 
 if type cmake &> /dev/null; then
     cd bin
-    if [[ ../CMakeLists.txt -nt ./bin/CMakeCache.txt ]]; then
+    if [[ ../CMakeLists.txt -nt ./CMakeCache.txt ]]; then
         cmake ..
     fi
     make
